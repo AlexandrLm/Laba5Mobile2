@@ -47,9 +47,11 @@ class GameActivity : AppCompatActivity() {
             if (v.id == R.id.selectPlayer1Button) {
                 logsArray.add(0, "${player1.name} сделал свой выбор")
                 intent.putExtra("name", player1.name)
+                intent.putExtra("energy", player1.energy)
             } else if (v.id == R.id.selectPlayer2Button) {
                 logsArray.add(0, "${player2.name} сделал свой выбор")
                 intent.putExtra("name", player2.name)
+                intent.putExtra("energy", player2.energy)
             }
             v.isActivated = true
             startForResult.launch(intent)
@@ -123,6 +125,16 @@ class GameActivity : AppCompatActivity() {
 
             player1.reset()
             player2.reset()
+            if (player1.hp <= 0 || player2.hp <= 0){
+                val intent = Intent(this, WinActivity::class.java)
+                if (player1.hp <= 0){
+                    intent.putExtra("name", player1.name)
+                }
+                else if (player2.hp <= 0){
+                    intent.putExtra("name", player2.name)
+                }
+                startActivity(intent)
+            }
             findViewById<Button>(R.id.selectPlayer1Button).isActivated = false
             findViewById<Button>(R.id.selectPlayer2Button).isActivated = false
             updateAllTexts()

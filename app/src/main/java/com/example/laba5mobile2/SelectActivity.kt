@@ -1,5 +1,6 @@
 package com.example.laba5mobile2
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -13,12 +14,31 @@ class SelectActivity : AppCompatActivity() {
     var attack : String = "none"
     var defend : String = "none"
     var power : Int = 0 // 0 - обычная атака; 1 - сильная атака
+    var energy : Int = 0
 
+    @SuppressLint("CutPasteId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select)
 
         findViewById<TextView>(R.id.textView2).text = intent.extras?.getString("name")
+        energy = intent.getIntExtra("energy", 0)
+        if (energy < 1){
+            findViewById<Button>(R.id.headButton).isClickable = false
+            findViewById<Button>(R.id.bodyButton).isClickable = false
+            findViewById<Button>(R.id.legButton).isClickable = false
+            findViewById<Button>(R.id.headButton).isActivated = true
+            findViewById<Button>(R.id.bodyButton).isActivated = true
+            findViewById<Button>(R.id.legButton).isActivated = true
+        }
+        if (energy < 2){
+            findViewById<Button>(R.id.heavyHeadButton).isClickable = false
+            findViewById<Button>(R.id.heavyBodyButton).isClickable = false
+            findViewById<Button>(R.id.heavyLegButton).isClickable = false
+            findViewById<Button>(R.id.heavyHeadButton).isActivated = true
+            findViewById<Button>(R.id.heavyBodyButton).isActivated = true
+            findViewById<Button>(R.id.heavyLegButton).isActivated = true
+        }
     }
 
     fun attackButtonPress(v : View){
